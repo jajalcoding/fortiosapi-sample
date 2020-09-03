@@ -20,7 +20,7 @@ def main():
     fgt.debug('on')
     fgthost = '192.168.1.99'
     user = 'admin'
-    passwd = 'tas19751975'
+    passwd = 'xxxx'
     # must add verify=False cert=None, otherwise will be error !
     resp = fgt.login(fgthost, user, passwd, verify=False, cert=None )
     pp = pprint.PrettyPrinter(indent=4)
