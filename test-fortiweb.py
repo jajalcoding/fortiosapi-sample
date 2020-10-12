@@ -7,14 +7,15 @@ def main():
     fweb = FortiwebAPI()
 #    fweb.adom = 'testing2'
 
-    fweb.loginparameter ( '3.1.211.245', 'admin', 'xxxx')
+    fweb.loginparameter ( '192.168.1.113', 'admin', 'fortinet123', 30018)
     vs = fweb.GetVirtualServer()
     st = fweb.GetSystemStatus() 
     itf =  fweb.GetInterface()
     sp = fweb.GetServerPolicy()
     wpf = fweb.GetWebProtectionProfile()
 
-#    fweb.BackupConfiguration ('test.zip')
+ #   fweb.BackupConfiguration ('test.zip')
+    hsl = fweb.UploadLicense('FVVC080000194792.lic')
 
     print ("System Status\n------------------------------")
     pp.pprint (st)
@@ -30,6 +31,9 @@ def main():
 
     print ("Web Prot Profile\n------------------------------")
     pp.pprint (wpf)
-    
+
+    print("Result of upload license -"+hsl['result'])
+
 if __name__ == '__main__':
   main()
+
