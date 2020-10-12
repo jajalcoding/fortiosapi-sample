@@ -18,9 +18,10 @@ class FortiwebAPI:
         self.verify = False
         self.adom = 'root'
 
-    def loginparameter ( self, host, username, password ):
+    def loginparameter ( self, host, username, password, portno=90 ):
+        # portno default is 90
         self.url_prefix = "/api/v1.0/"
-        self.host = host+":90"
+        self.host = host+":"+str(portno)
         if (self.adom == 'root'):
             token = username+":"+password
         else:
@@ -76,4 +77,18 @@ class FortiwebAPI:
         nodeurl = "Policy/WebProtectionProfile/InlineProtectionProfile"
         hasil = self.get (nodeurl)
         return self.formathasil(hasil.text)
+
+    def put ( self, nodeurl, licensefile ):
+        finalurl = "https://"+self.host+self.url_prefix+nodeurl
+        x = open( licensefile, 'r')
+        licstring = x.read()
+        x.close()
+        filelicense = {'file': ( licensefile, licstring )}
+        res = requests.post ( finalurl, headers = self.headers , verify = self.verify, files=filelicense )
+        return self.formathasil(res.text)
+
+    def UploadLicense (self, licensefile ):
+        nodeurl = 'System/Status/VMLicense'
+        hasil = self.put (nodeurl, licensefile)
+        return hasil
     
